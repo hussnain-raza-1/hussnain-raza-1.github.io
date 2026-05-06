@@ -1,266 +1,1039 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hussnain Raza — Graphic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ════════════════════════════════════════
+       RESET & DESIGN TOKENS
+    ════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<title>Hussnain Raza — Designer</title>
+    :root {
+      --light:  #F5F3EE;
+      --dark:   #0D0D0C;
+      --accent: #C4A882;
+      --mid:    #8A887F;
+      --ll:     rgba(13,13,12,0.08);
+      --ld:     rgba(245,243,238,0.08);
+      --ease:   cubic-bezier(0.23, 1, 0.32, 1);
+      --pad:    56px;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Open+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      background: var(--light);
+      color: var(--dark);
+      cursor: none;
+      overflow-x: hidden;
+    }
 
-<style>
-:root{
---white:#f8f8f6;
---black:#0d0d0d;
---mid:#777;
---accent:#c8b89a;
+    /* ════════════════════════════════════════
+       LOADER
+    ════════════════════════════════════════ */
+    #loader {
+      position: fixed; inset: 0;
+      background: var(--light);
+      z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.9s var(--ease);
+    }
+    #loader.hide { opacity: 0; pointer-events: none; }
 
---font-display:'Open Sans',sans-serif;
---font-body:'Montserrat',sans-serif;
-}
+    .loader-wrap {
+      position: relative;
+      width: 136px; height: 136px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Spinning dashed orbit ring */
+    .loader-orbit {
+      position: absolute; inset: 0;
+      animation: lSpin 3s linear infinite;
+    }
+    @keyframes lSpin { to { transform: rotate(360deg); } }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+    /* Aries logo — paths draw in */
+    .loader-aries {
+      width: 56px; height: 48px;
+      overflow: visible;
+      flex-shrink: 0;
+    }
+    .loader-aries path {
+      fill: none;
+      stroke: var(--dark);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 210;
+      stroke-dashoffset: 210;
+    }
+    .loader-aries path:nth-child(1) { animation: lDraw 1.1s 0.15s var(--ease) forwards; }
+    .loader-aries path:nth-child(2) { animation: lDraw 1.1s 0.45s var(--ease) forwards; }
+    .loader-aries circle {
+      fill: var(--dark);
+      opacity: 0;
+      animation: lFade 0.4s 1.3s ease forwards;
+    }
+    @keyframes lDraw { to { stroke-dashoffset: 0; } }
+    @keyframes lFade { to { opacity: 1; } }
 
-body{
-font-family:var(--font-body);
-background:var(--white);
-color:var(--black);
-cursor:none;
-}
+    /* ════════════════════════════════════════
+       CURSOR
+    ════════════════════════════════════════ */
+    #cur, #cur-r {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      will-change: left, top;
+    }
 
-/* LOADER */
-#loader{
-position:fixed;inset:0;
-background:var(--black);
-display:flex;align-items:center;justify-content:center;
-z-index:9999;
-}
-.loader-ring{
-width:80px;height:80px;
-border:1px solid #fff;
-border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-animation:spin 1.5s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
+    /* ── Hero: circle ── */
+    #cur {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--dark);
+      transition:
+        width .45s var(--ease), height .45s var(--ease),
+        border-radius .45s var(--ease),
+        background .35s ease, opacity .35s ease;
+    }
+    #cur::before, #cur::after { display: none; }
 
-/* CURSOR */
-#cursor{
-position:fixed;
-width:12px;height:12px;
-background:var(--black);
-pointer-events:none;
-z-index:999;
-transform:translate(-50%,-50%);
-}
+    #cur-r {
+      width: 40px; height: 40px;
+      border: 1px solid var(--dark);
+      border-radius: 50%;
+      opacity: 0.35;
+      transition:
+        width .5s var(--ease), height .5s var(--ease),
+        border-radius .5s var(--ease),
+        border-color .35s ease, opacity .35s ease,
+        transform .5s var(--ease);
+    }
 
-/* cursor states */
-body.cursor-square #cursor{border-radius:0;}
-body.cursor-circle #cursor{border-radius:50%;}
-body.cursor-cross #cursor{
-background:transparent;
-}
-body.cursor-cross #cursor::before,
-body.cursor-cross #cursor::after{
-content:'';
-position:absolute;
-width:20px;height:2px;
-background:var(--black);
-top:50%;left:50%;
-transform-origin:center;
-}
-body.cursor-cross #cursor::before{
-transform:translate(-50%,-50%) rotate(45deg);
-}
-body.cursor-cross #cursor::after{
-transform:translate(-50%,-50%) rotate(-45deg);
-}
+    /* ── About: square ── */
+    body[data-sec="about"] #cur {
+      width: 12px; height: 12px;
+      border-radius: 0;
+      background: var(--light);
+    }
+    body[data-sec="about"] #cur-r {
+      width: 36px; height: 36px;
+      border-radius: 0;
+      border-color: rgba(245,243,238,.45);
+      opacity: 0.55;
+    }
 
-/* NAV */
-nav{
-position:fixed;
-top:0;width:100%;
-display:flex;
-justify-content:center;
-padding:30px;
-z-index:100;
-}
-.nav-logo{
-position:absolute;
-left:40px;
-}
-.nav-links{
-display:flex;
-gap:40px;
-list-style:none;
-}
-.nav-links a{
-text-decoration:none;
-font-size:12px;
-letter-spacing:2px;
-color:var(--black);
-}
+    /* ── Work: X mark ── */
+    body[data-sec="work"] #cur {
+      width: 22px; height: 22px;
+      border-radius: 0;
+      background: transparent;
+    }
+    body[data-sec="work"] #cur::before,
+    body[data-sec="work"] #cur::after {
+      display: block; content: '';
+      position: absolute;
+      width: 100%; height: 1.5px;
+      background: var(--dark);
+      top: 50%; left: 0;
+    }
+    body[data-sec="work"] #cur::before { transform: translateY(-50%) rotate(45deg); }
+    body[data-sec="work"] #cur::after  { transform: translateY(-50%) rotate(-45deg); }
+    body[data-sec="work"] #cur-r       { width: 0; height: 0; opacity: 0; }
 
-/* SCROLL LINE */
-.nav-line{
-position:fixed;
-top:70px;
-left:0;
-height:1px;
-background:var(--black);
-width:0%;
-z-index:99;
-}
+    /* ── Contact: diamond ── */
+    body[data-sec="contact"] #cur {
+      width: 12px; height: 12px;
+      border-radius: 0;
+      background: var(--accent);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    body[data-sec="contact"] #cur-r {
+      width: 34px; height: 34px;
+      border-radius: 0;
+      border-color: rgba(196,168,130,.4);
+      opacity: 0.55;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
 
-/* HERO */
-#hero{
-height:100vh;
-display:flex;
-align-items:flex-end;
-padding:60px;
-position:relative;
-}
-.hero-symbol{
-position:absolute;
-top:50%;left:50%;
-transform:translate(-50%,-50%);
-font-size:200px;
-opacity:0.05;
-}
-.hero-name{
-font-family:var(--font-display);
-font-size:80px;
-font-weight:700;
-}
+    /* Hover scale */
+    body.c-on #cur   { opacity: 0.55; transform: translate(-50%,-50%) scale(1.7); }
+    body.c-on #cur-r { opacity: 0.14; transform: translate(-50%,-50%) scale(1.8); }
+    body[data-sec="contact"].c-on #cur {
+      transform: translate(-50%,-50%) rotate(45deg) scale(1.6); }
+    body[data-sec="contact"].c-on #cur-r {
+      transform: translate(-50%,-50%) rotate(45deg) scale(1.8); }
 
-/* SECTIONS */
-section{padding:120px 60px;}
+    /* ════════════════════════════════════════
+       NAV
+    ════════════════════════════════════════ */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 var(--pad);
+      height: 76px;
+    }
 
-#work{background:var(--black);color:var(--white);}
-#contact{background:var(--black);color:var(--white);}
+    .nav-logo {
+      text-decoration: none;
+      display: flex; align-items: center;
+    }
+    .nav-logo svg { width: 38px; height: 32px; }
+    .nav-logo path { transition: stroke .4s ease; }
 
-/* PROJECT LIST */
-.project{
-padding:30px 0;
-border-top:1px solid rgba(255,255,255,0.2);
-font-size:32px;
-}
+    /* Center links container */
+    .nav-links {
+      position: relative;
+      display: flex; align-items: center;
+      gap: 52px;
+      list-style: none;
+    }
+    .nav-links li { position: static; }
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      font-size: 0.67rem;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--dark);
+      white-space: nowrap;
+      transition: color .4s ease;
+    }
 
-/* CONTACT */
-.contact-title{
-font-size:80px;
-font-family:var(--font-display);
-}
+    /* Sliding underline */
+    #nav-line {
+      position: absolute;
+      bottom: -9px; left: 0;
+      height: 1px; width: 0;
+      background: var(--dark);
+      transition:
+        left .55s var(--ease),
+        width .55s var(--ease),
+        background .35s ease,
+        opacity .35s ease;
+      opacity: 0;
+    }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-.hero-name{font-size:48px;}
-.contact-title{font-size:48px;}
-}
+    /* Nav right */
+    .nav-right {
+      display: flex; justify-content: flex-end; align-items: center; gap: 9px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.57rem; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--mid);
+      transition: color .4s ease;
+    }
+    .dot-avail {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4baf6e;
+      animation: dotBreath 2.3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes dotBreath { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-</style>
+    /* Inverted nav (on dark sections) */
+    #nav.inv .nav-logo path      { stroke: var(--light) !important; }
+    #nav.inv .nav-logo circle    { fill: var(--light) !important; }
+    #nav.inv .nav-links a        { color: var(--light); }
+    #nav.inv #nav-line            { background: var(--light); }
+    #nav.inv .nav-right           { color: rgba(245,243,238,.35); }
+
+    /* ════════════════════════════════════════
+       HERO  (light)
+    ════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      background: var(--light);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 var(--pad) 76px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--ll);
+    }
+
+    /* Large faint Aries — decorative background element */
+    .hero-deco {
+      position: absolute;
+      top: 50%; right: 4%;
+      transform: translateY(-46%);
+      width: min(44vw, 560px);
+      opacity: 0.05;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Vertical side labels */
+    .hero-side {
+      position: absolute; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 7px;
+    }
+    .side-l { left: var(--pad); }
+    .side-r { right: var(--pad); align-items: flex-end; }
+    .hero-side span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.54rem; font-weight: 500;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--mid);
+      writing-mode: vertical-rl; text-orientation: mixed;
+    }
+    .side-l span { transform: rotate(180deg); }
+
+    /* Name */
+    .hero-name {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(58px, 11.5vw, 152px);
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      position: relative; z-index: 2;
+    }
+    .nl { overflow: hidden; }
+    .nl span {
+      display: block;
+      opacity: 0;
+      transform: translateY(108%);
+      animation: nlUp 1s var(--ease) forwards;
+    }
+    .nl:nth-child(2) span { animation-delay: 0.1s; }
+    @keyframes nlUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Bottom row */
+    .hero-bot {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-top: 40px;
+      position: relative; z-index: 2;
+    }
+    .hero-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.87rem; font-weight: 300;
+      color: var(--mid); line-height: 1.78;
+      max-width: 310px;
+      opacity: 0;
+      animation: fadeUp .9s .45s var(--ease) forwards;
+    }
+    .hero-scroll {
+      display: flex; align-items: center; gap: 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.57rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--mid);
+      opacity: 0;
+      animation: fadeUp .9s .65s var(--ease) forwards;
+    }
+    .scroll-ln {
+      width: 44px; height: 1px;
+      background: var(--mid);
+      transform-origin: left;
+      animation: breathe 2.3s ease-in-out infinite 1.5s;
+    }
+    @keyframes breathe { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(.3)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ════════════════════════════════════════
+       MARQUEE
+    ════════════════════════════════════════ */
+    .mq-wrap { overflow: hidden; background: var(--dark); padding: 15px 0; }
+    .mq-track {
+      display: flex; width: max-content;
+      animation: mq 22s linear infinite;
+    }
+    .mi {
+      display: flex; align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.61rem; font-weight: 500;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: rgba(245,243,238,.36);
+      padding: 0 36px; white-space: nowrap;
+    }
+    .ms { color: var(--accent); font-size: 0.36rem; margin-left: 36px; }
+    @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ════════════════════════════════════════
+       SHARED SECTION LABEL
+    ════════════════════════════════════════ */
+    .sec-lbl {
+      display: flex; align-items: center; gap: 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.56rem; font-weight: 500;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      margin-bottom: 80px;
+    }
+    .sec-lbl::before { content: ''; display: block; width: 26px; height: 1px; }
+
+    /* ════════════════════════════════════════
+       ABOUT  (dark)
+    ════════════════════════════════════════ */
+    #about {
+      background: var(--dark);
+      color: var(--light);
+      padding: 128px var(--pad);
+      border-bottom: 1px solid var(--ld);
+    }
+    #about .sec-lbl           { color: rgba(245,243,238,.28); }
+    #about .sec-lbl::before   { background: rgba(245,243,238,.16); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 92px; align-items: start;
+    }
+
+    .about-photo {
+      aspect-ratio: 3/4;
+      background: #191917;
+      overflow: hidden; position: relative;
+    }
+    /* Real photo — uncomment when ready:
+       .about-photo img { width:100%;height:100%;object-fit:cover;display:block;
+         transition:transform .85s var(--ease); }
+       .about-photo:hover img { transform:scale(1.04); } */
+    .ph-inner {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+    }
+    .ph-inner svg { opacity: .18; }
+    .ph-inner p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .52rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(245,243,238,.22);
+    }
+    .ph-tag {
+      position: absolute; bottom: 20px; left: 20px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .52rem; font-weight: 500;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(245,243,238,.2);
+    }
+
+    .about-headline {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 3.8vw, 52px);
+      line-height: 1.12; letter-spacing: -.025em;
+      color: var(--light); margin-bottom: 36px;
+    }
+    .about-headline em {
+      font-style: italic;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300; color: var(--accent);
+    }
+    .about-p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .87rem; font-weight: 300;
+      line-height: 1.95; color: rgba(245,243,238,.46);
+      margin-bottom: 28px; max-width: 470px;
+    }
+    .about-div { width:100%; height:1px; background: var(--ld); margin: 48px 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .57rem; font-weight: 500;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(245,243,238,.4);
+      border: 1px solid rgba(245,243,238,.12);
+      padding: 9px 18px;
+      transition: border-color .3s, color .3s;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ════════════════════════════════════════
+       WORK  (light)
+    ════════════════════════════════════════ */
+    #work {
+      background: var(--light);
+      padding: 128px var(--pad);
+      border-bottom: 1px solid var(--ll);
+    }
+    #work .sec-lbl           { color: rgba(13,13,12,.28); }
+    #work .sec-lbl::before   { background: rgba(13,13,12,.14); }
+
+    .work-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 72px;
+    }
+    .work-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 6vw, 84px);
+      line-height: 0.95; letter-spacing: -.035em;
+    }
+    .work-ct {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .57rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--mid); padding-bottom: 6px;
+    }
+
+    .proj-list { list-style: none; }
+    .proj-item {
+      position: relative;
+      border-top: 1px solid var(--ll);
+    }
+    .proj-item:last-child { border-bottom: 1px solid var(--ll); }
+
+    /* Hover fill sweep */
+    .proj-item::after {
+      content: ''; position: absolute; inset: 0;
+      width: 0; background: #EDEAE3;
+      transition: width .6s var(--ease); z-index: 0;
+    }
+    .proj-item:hover::after { width: 100%; }
+
+    .proj-link {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      align-items: center; gap: 44px;
+      padding: 42px 0;
+      text-decoration: none; color: var(--dark);
+      position: relative; z-index: 1;
+      transition: padding-left .55s var(--ease);
+    }
+    .proj-item:hover .proj-link { padding-left: 22px; }
+
+    .pn  { font-family:'Montserrat',sans-serif; font-size:.57rem; font-weight:500;
+           letter-spacing:.18em; color:var(--mid); }
+    .ptitle {
+      font-family: 'Open Sans', sans-serif; font-weight: 700;
+      font-size: clamp(16px, 2.8vw, 38px);
+      letter-spacing: -.015em;
+      transition: letter-spacing .55s var(--ease);
+    }
+    .proj-item:hover .ptitle { letter-spacing: .01em; }
+    .ptitle em {
+      font-style: italic;
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+    }
+    .pmeta { text-align: right; }
+    .ptype {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .55rem; font-weight: 500;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 7px;
+    }
+    .pyear {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .55rem; font-weight: 400;
+      letter-spacing: .1em; color: var(--accent);
+    }
+
+    /* Floating preview */
+    #peek {
+      position: fixed;
+      width: 268px; height: 192px;
+      pointer-events: none; z-index: 800;
+      opacity: 0;
+      transform: scale(.88) translateY(14px);
+      transition: opacity .38s ease, transform .38s var(--ease);
+    }
+    #peek.on { opacity: 1; transform: scale(1) translateY(0); }
+    .peek-in {
+      width: 100%; height: 100%;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .peek-in span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .6rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(245,243,238,.22);
+    }
+
+    /* ════════════════════════════════════════
+       CONTACT  (dark)
+    ════════════════════════════════════════ */
+    #contact {
+      background: var(--dark);
+      color: var(--light);
+      padding: 128px var(--pad) 100px;
+    }
+    #contact .sec-lbl           { color: rgba(245,243,238,.28); }
+    #contact .sec-lbl::before   { background: rgba(245,243,238,.15); }
+
+    .contact-h {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 10.5vw, 144px);
+      line-height: .92; letter-spacing: -.04em;
+      margin-bottom: 88px;
+    }
+    .contact-h em {
+      font-style: italic;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300; color: var(--accent);
+    }
+    .contact-row {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      border-top: 1px solid var(--ld);
+      padding-top: 56px;
+      flex-wrap: wrap; gap: 40px;
+    }
+    .c-email {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(12px, 1.75vw, 21px); font-weight: 300;
+      color: var(--light); text-decoration: none;
+      position: relative; padding-bottom: 3px;
+    }
+    .c-email::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 1px;
+      background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .55s var(--ease);
+    }
+    .c-email:hover::after { transform: scaleX(1); }
+
+    .c-socials { display: flex; gap: 30px; }
+    .c-socials a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .57rem; font-weight: 500;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(245,243,238,.3); text-decoration: none;
+      transition: color .3s;
+    }
+    .c-socials a:hover { color: var(--light); }
+
+    .c-copy {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .54rem; font-weight: 400;
+      letter-spacing: .14em;
+      color: rgba(245,243,238,.17);
+    }
+
+    /* ════════════════════════════════════════
+       FOOTER
+    ════════════════════════════════════════ */
+    footer {
+      background: #080807;
+      padding: 22px var(--pad);
+      display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .52rem; font-weight: 500;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(245,243,238,.15);
+    }
+
+    /* ════════════════════════════════════════
+       SCROLL REVEAL
+    ════════════════════════════════════════ */
+    .rv {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .95s var(--ease), transform .95s var(--ease);
+    }
+    .rv.vis { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .13s; }
+    .d2 { transition-delay: .26s; }
+    .d3 { transition-delay: .39s; }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      :root { --pad: 28px; }
+      .hero-side { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 52px; }
+      .proj-link { grid-template-columns: 48px 1fr; }
+      .pmeta { display: none; }
+      .nav-right { display: none; }
+      #nav { grid-template-columns: auto 1fr; }
+      .nav-links { justify-content: flex-end; }
+    }
+    @media (max-width: 560px) {
+      .contact-row { flex-direction: column; align-items: flex-start; gap: 28px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .nav-links { gap: 28px; }
+    }
+  </style>
 </head>
 
-<body>
+<body data-sec="hero">
 
-<!-- LOADER -->
-<div id="loader">
-<div class="loader-ring">
-<svg width="30" height="30" viewBox="0 0 24 24" stroke="white" fill="none">
-<path d="M6 14c0-4 2.5-7 6-7s6 3 6 7"/>
-</svg>
-</div>
-</div>
+  <!-- ══════════════ LOADER ══════════════════ -->
+  <div id="loader">
+    <div class="loader-wrap">
+      <!-- Dashed orbit ring that spins -->
+      <svg class="loader-orbit" viewBox="0 0 136 136"
+           style="position:absolute;inset:0;width:100%;height:100%">
+        <circle cx="68" cy="68" r="62"
+          fill="none" stroke="var(--dark)" stroke-width="0.8"
+          stroke-dasharray="5 14" stroke-linecap="round"/>
+      </svg>
 
-<!-- CURSOR -->
-<div id="cursor"></div>
+      <!-- Aries logo drawing itself -->
+      <svg class="loader-aries" viewBox="0 0 62 54" fill="none">
+        <path d="M 31,46 C 28,32 13,10 2,18 C -3,23 0,37 7,42 C 10,45 18,46 20,41"/>
+        <path d="M 31,46 C 34,32 49,10 60,18 C 65,23 62,37 55,42 C 52,45 44,46 42,41"/>
+        <circle cx="31" cy="46" r="2.2" fill="var(--dark)" stroke="none"/>
+      </svg>
+    </div>
+  </div>
 
-<!-- NAV -->
-<nav>
-<div class="nav-logo">
-<svg width="24" height="24" viewBox="0 0 24 24" stroke="black" fill="none">
-<path d="M6 14c0-4 2.5-7 6-7s6 3 6 7"/>
-</svg>
-</div>
+  <!-- ══════════════ CURSOR ══════════════════ -->
+  <div id="cur"></div>
+  <div id="cur-r"></div>
 
-<ul class="nav-links">
-<li><a href="#about">About</a></li>
-<li><a href="#work">Work</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
+  <!-- ══════════════ PROJECT PREVIEW ═════════ -->
+  <div id="peek"><div class="peek-in"><span>View Project</span></div></div>
 
-<div class="nav-line"></div>
+  <!-- ══════════════ NAV ═════════════════════ -->
+  <nav id="nav">
 
-<!-- HERO -->
-<section id="hero" data-cursor="circle">
-<div class="hero-symbol">♈</div>
-<h1 class="hero-name">Hussnain Raza</h1>
-</section>
+    <!-- Aries logo (left) -->
+    <a href="#hero" class="nav-logo" aria-label="Home">
+      <svg viewBox="0 0 62 54" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 31,46 C 28,32 13,10 2,18 C -3,23 0,37 7,42 C 10,45 18,46 20,41"
+              stroke="var(--dark)" stroke-width="2.1"/>
+        <path d="M 31,46 C 34,32 49,10 60,18 C 65,23 62,37 55,42 C 52,45 44,46 42,41"
+              stroke="var(--dark)" stroke-width="2.1"/>
+        <circle cx="31" cy="46" r="2.5" fill="var(--dark)" stroke="none"/>
+      </svg>
+    </a>
 
-<!-- ABOUT -->
-<section id="about" data-cursor="square">
-<h2>About</h2>
-<p style="max-width:500px;margin-top:20px;color:var(--mid);">
-I design clean, intentional brand identities that focus on clarity and impact.
-</p>
-</section>
+    <!-- Centered nav links -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about"   data-sec="about">About</a></li>
+      <li><a href="#work"    data-sec="work">Work</a></li>
+      <li><a href="#contact" data-sec="contact">Contact</a></li>
+      <span id="nav-line"></span>
+    </ul>
 
-<!-- WORK -->
-<section id="work" data-cursor="cross">
-<h2>Work</h2>
+    <!-- Availability (right) -->
+    <div class="nav-right">
+      <span class="dot-avail"></span>
+      <span>Available for work</span>
+    </div>
+  </nav>
 
-<div class="project">Brand Identity — 2025</div>
-<div class="project">Logo System — 2025</div>
-<div class="project">Visual Identity — 2024</div>
+  <!-- ══════════════ HERO ═════════════════════ -->
+  <section id="hero">
 
-</section>
+    <!-- Faint decorative Aries with constellation -->
+    <svg class="hero-deco" viewBox="0 0 580 500" fill="none"
+         stroke="var(--dark)" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Outer sweeping ram horns -->
+      <path d="M 290 418 C 278 320 140 96 22 148
+               C -36 178 -4 308 52 360 C 74 382 114 390 144 362"
+            stroke-width="1.4"/>
+      <path d="M 290 418 C 302 320 440 96 558 148
+               C 616 178 584 308 528 360 C 506 382 466 390 436 362"
+            stroke-width="1.4"/>
+      <!-- Inner arc details -->
+      <path d="M 172 252 C 148 218 118 214 102 232"
+            stroke-width="0.8" opacity="0.55"/>
+      <path d="M 408 252 C 432 218 462 214 478 232"
+            stroke-width="0.8" opacity="0.55"/>
+      <!-- Constellation dots & lines -->
+      <circle cx="290" cy="68"  r="5"   fill="var(--dark)" stroke="none" opacity="0.7"/>
+      <circle cx="216" cy="122" r="3"   fill="var(--dark)" stroke="none" opacity="0.45"/>
+      <circle cx="364" cy="122" r="3"   fill="var(--dark)" stroke="none" opacity="0.45"/>
+      <circle cx="158" cy="182" r="2"   fill="var(--dark)" stroke="none" opacity="0.28"/>
+      <circle cx="422" cy="182" r="2"   fill="var(--dark)" stroke="none" opacity="0.28"/>
+      <line x1="290" y1="68"  x2="216" y2="122" stroke-width="0.7" opacity="0.22"/>
+      <line x1="290" y1="68"  x2="364" y2="122" stroke-width="0.7" opacity="0.22"/>
+      <line x1="216" y1="122" x2="158" y2="182" stroke-width="0.7" opacity="0.15"/>
+      <line x1="364" y1="122" x2="422" y2="182" stroke-width="0.7" opacity="0.15"/>
+      <!-- Anchor dot -->
+      <circle cx="290" cy="418" r="6" fill="var(--dark)" stroke="none" opacity="0.5"/>
+    </svg>
 
-<!-- CONTACT -->
-<section id="contact" data-cursor="circle">
-<h2 class="contact-title">Let’s build something</h2>
-<p style="margin-top:20px;">hussnain@email.com</p>
-</section>
+    <!-- Vertical side text -->
+    <div class="hero-side side-l">
+      <span>Graphic Designer</span>
+      <span>Lahore, PK</span>
+    </div>
+    <div class="hero-side side-r">
+      <span>Est. 2025</span>
+      <span>Brand Identity</span>
+    </div>
 
-<script>
+    <!-- Name -->
+    <div class="hero-name">
+      <div class="nl"><span>Hussnain</span></div>
+      <div class="nl"><span>Raza</span></div>
+    </div>
 
-/* loader */
-window.onload=()=>{
-setTimeout(()=>{
-document.getElementById('loader').style.display='none';
-},800);
-}
+    <!-- Bottom bar -->
+    <div class="hero-bot">
+      <p class="hero-tag">
+        Crafting visual identities that<br>speak before words ever do.
+      </p>
+      <div class="hero-scroll">
+        <span class="scroll-ln"></span>
+        Scroll
+      </div>
+    </div>
+  </section>
 
-/* cursor */
-const cursor=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{
-cursor.style.left=e.clientX+'px';
-cursor.style.top=e.clientY+'px';
-});
+  <!-- ══════════════ MARQUEE ══════════════════ -->
+  <div class="mq-wrap">
+    <div class="mq-track">
+      <span class="mi">Branding<span class="ms">✦</span></span>
+      <span class="mi">Identity Design<span class="ms">✦</span></span>
+      <span class="mi">Visual Direction<span class="ms">✦</span></span>
+      <span class="mi">Logo Systems<span class="ms">✦</span></span>
+      <span class="mi">Typography<span class="ms">✦</span></span>
+      <span class="mi">Art Direction<span class="ms">✦</span></span>
+      <span class="mi">Brand Strategy<span class="ms">✦</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="mi">Branding<span class="ms">✦</span></span>
+      <span class="mi">Identity Design<span class="ms">✦</span></span>
+      <span class="mi">Visual Direction<span class="ms">✦</span></span>
+      <span class="mi">Logo Systems<span class="ms">✦</span></span>
+      <span class="mi">Typography<span class="ms">✦</span></span>
+      <span class="mi">Art Direction<span class="ms">✦</span></span>
+      <span class="mi">Brand Strategy<span class="ms">✦</span></span>
+    </div>
+  </div>
 
-/* cursor section change */
-const sections=document.querySelectorAll('section');
+  <!-- ══════════════ ABOUT  (dark) ════════════ -->
+  <section id="about">
+    <div class="sec-lbl">01 — About</div>
 
-window.addEventListener('scroll',()=>{
-let current='';
-sections.forEach(sec=>{
-const top=window.scrollY;
-if(top>=sec.offsetTop-200){
-current=sec.dataset.cursor;
-}
-});
-document.body.className='';
-document.body.classList.add('cursor-'+current);
-});
+    <div class="about-grid">
 
-/* scroll line */
-window.addEventListener('scroll',()=>{
-let h=document.body.scrollHeight-window.innerHeight;
-let p=(window.scrollY/h)*100;
-document.querySelector('.nav-line').style.width=p+'%';
-});
+      <!-- Photo column -->
+      <div class="rv">
+        <div class="about-photo">
+          <!--
+            ★ TO ADD YOUR PHOTO:
+            Remove the ph-inner div below and replace with:
+            <img src="images/hussnain.jpg" alt="Hussnain Raza" style="width:100%;height:100%;object-fit:cover;display:block;">
+          -->
+          <div class="ph-inner">
+            <svg width="54" height="54" viewBox="0 0 54 54" fill="none"
+                 stroke="rgba(245,243,238,0.3)" stroke-width="1">
+              <circle cx="27" cy="19" r="9"/>
+              <path d="M 5 48 C 5 35 15 27 27 27 C 39 27 49 35 49 48"/>
+            </svg>
+            <p>Add your photo here</p>
+          </div>
+          <span class="ph-tag">Hussnain Raza — 2025</span>
+        </div>
+      </div>
 
-</script>
+      <!-- Text column -->
+      <div>
+        <h2 class="about-headline rv">
+          Design is<br><em>feeling</em><br>made visible.
+        </h2>
+        <p class="about-p rv d1">
+          I'm Hussnain Raza, a graphic designer specialising in branding and identity. I believe a great brand is more than a logo — it's a system of meaning that resonates without explanation.
+        </p>
+        <p class="about-p rv d2">
+          Based in Lahore, Pakistan and open to collaborating globally. Whether you're building something new from the ground up or refining an existing identity, I create work built to last.
+        </p>
+        <div class="about-div rv d3"></div>
+        <div class="chips rv d3">
+          <span class="chip">Brand Identity</span>
+          <span class="chip">Logo Design</span>
+          <span class="chip">Typography</span>
+          <span class="chip">Visual Systems</span>
+          <span class="chip">Brand Strategy</span>
+          <span class="chip">Art Direction</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ══════════════ WORK  (light) ════════════ -->
+  <section id="work">
+    <div class="sec-lbl">02 — Selected Work</div>
+
+    <div class="work-head">
+      <h2 class="work-title rv">Selected<br>Projects</h2>
+      <span class="work-ct rv">04 Works</span>
+    </div>
+
+    <ul class="proj-list">
+      <li class="proj-item rv">
+        <a href="#" class="proj-link">
+          <span class="pn">01</span>
+          <span class="ptitle">Project <em>Name</em></span>
+          <div class="pmeta">
+            <span class="ptype">Brand Identity</span>
+            <span class="pyear">2025</span>
+          </div>
+        </a>
+      </li>
+      <li class="proj-item rv d1">
+        <a href="#" class="proj-link">
+          <span class="pn">02</span>
+          <span class="ptitle"><em>Visual</em> Identity</span>
+          <div class="pmeta">
+            <span class="ptype">Logo System</span>
+            <span class="pyear">2025</span>
+          </div>
+        </a>
+      </li>
+      <li class="proj-item rv d2">
+        <a href="#" class="proj-link">
+          <span class="pn">03</span>
+          <span class="ptitle">Brand <em>Story</em></span>
+          <div class="pmeta">
+            <span class="ptype">Art Direction</span>
+            <span class="pyear">2024</span>
+          </div>
+        </a>
+      </li>
+      <li class="proj-item rv d3">
+        <a href="#" class="proj-link">
+          <span class="pn">04</span>
+          <span class="ptitle"><em>Identity</em> System</span>
+          <div class="pmeta">
+            <span class="ptype">Branding</span>
+            <span class="pyear">2024</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ══════════════ CONTACT  (dark) ══════════ -->
+  <section id="contact">
+    <div class="sec-lbl">03 — Let's Talk</div>
+
+    <h2 class="contact-h rv">
+      Have a brand<br>to <em>build?</em>
+    </h2>
+
+    <div class="contact-row rv d1">
+      <!-- ★ Replace with your real email -->
+      <a href="mailto:hussnain@email.com" class="c-email">
+        hussnain@email.com
+      </a>
+      <div class="c-socials">
+        <!-- ★ Replace # with your actual profile links -->
+        <a href="#" target="_blank">Behance</a>
+        <a href="#" target="_blank">Instagram</a>
+        <a href="#" target="_blank">LinkedIn</a>
+      </div>
+      <span class="c-copy">©2025 Hussnain Raza</span>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ════════════════════ -->
+  <footer>
+    <span>Hussnain Raza — Graphic Designer</span>
+    <span>Designed with intention.</span>
+  </footer>
+
+  <!-- ══════════════ SCRIPT ════════════════════ -->
+  <script>
+    /* ─────────── LOADER ─────────── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const l = document.getElementById('loader');
+        l.classList.add('hide');
+        setTimeout(() => l.style.display = 'none', 950);
+      }, 2700);
+    });
+
+    /* ─────────── CURSOR ─────────── */
+    const cur  = document.getElementById('cur');
+    const curR = document.getElementById('cur-r');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cur.style.left = mx + 'px';
+      cur.style.top  = my + 'px';
+    });
+
+    (function tickRing() {
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      curR.style.left = rx + 'px';
+      curR.style.top  = ry + 'px';
+      requestAnimationFrame(tickRing);
+    })();
+
+    /* Hover state */
+    document.querySelectorAll('a, button, .chip').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('c-on'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('c-on'));
+    });
+
+    /* ─────────── SECTION DETECTION ─────────── */
+    const mainNav  = document.getElementById('nav');
+    const darkSecs = new Set(['about', 'contact']);
+    let   lastSec  = 'hero';
+
+    function getSec() {
+      const mid = window.innerHeight / 2;
+      let active = 'hero';
+      document.querySelectorAll('section[id]').forEach(s => {
+        const r = s.getBoundingClientRect();
+        if (r.top < mid && r.bottom > mid) active = s.id;
+      });
+      return active;
+    }
+
+    function applySec() {
+      const sec = getSec();
+      if (sec === lastSec) return;
+      lastSec = sec;
+      document.body.dataset.sec = sec;
+      mainNav.classList.toggle('inv', darkSecs.has(sec));
+      moveNavLine(sec);
+    }
+
+    window.addEventListener('scroll', applySec, { passive: true });
+    /* Initial */
+    setTimeout(applySec, 100);
+
+    /* ─────────── NAV SLIDING LINE ─────────── */
+    const navLine  = document.getElementById('nav-line');
+    const navLinks = document.getElementById('navLinks');
+
+    function moveNavLine(sec) {
+      const link = navLinks.querySelector(`a[data-sec="${sec}"]`);
+      if (!link) { navLine.style.opacity = '0'; return; }
+      const cL = navLinks.getBoundingClientRect().left;
+      const lR = link.getBoundingClientRect();
+      navLine.style.left    = (lR.left - cL) + 'px';
+      navLine.style.width   = lR.width + 'px';
+      navLine.style.opacity = '1';
+    }
+
+    /* Also trigger line on nav link click */
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        const sec = a.dataset.sec;
+        if (sec) moveNavLine(sec);
+      });
+    });
+
+    /* ─────────── PROJECT PREVIEW ─────────── */
+    const peek = document.getElementById('peek');
+    document.querySelectorAll('.proj-item').forEach(item => {
+      item.addEventListener('mouseenter', () => peek.classList.add('on'));
+      item.addEventListener('mouseleave', () => peek.classList.remove('on'));
+    });
+    document.addEventListener('mousemove', e => {
+      peek.style.left = (e.clientX + 26) + 'px';
+      peek.style.top  = (e.clientY - 96) + 'px';
+    });
+
+    /* ─────────── SCROLL REVEAL ─────────── */
+    const rvObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
+  </script>
 </body>
 </html>
