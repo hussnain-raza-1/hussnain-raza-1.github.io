@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hussnain Raza — Customer Success & Support</title>
+  <title>Hussnain Raza — Graphic & Web Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
@@ -52,10 +52,7 @@
       width: 140px; height: 140px;
       display: flex; align-items: center; justify-content: center;
     }
-    .l-orbit {
-      position: absolute; inset: 0;
-      animation: lSpin 3s linear infinite;
-    }
+    .l-orbit { position: absolute; inset: 0; animation: lSpin 3s linear infinite; }
     @keyframes lSpin { to { transform: rotate(360deg); } }
 
     .l-logo { width: 60px; height: 42px; overflow: visible; flex-shrink: 0; }
@@ -80,13 +77,13 @@
 
     /* ═══════════════════════════════════════════════
        CURSOR SYSTEM
-       5 unique shapes — each always visible on its bg:
-
-       hero      (light bg) → ● filled circle, dark
-       about     (dark  bg) → □ square outline, light
-       skills    (light bg) → + plus cross, dark
-       experience(dark  bg) → × X cross, light
-       contact   (dark  bg) → ◆ diamond solid, accent
+       Section → bg      → cursor shape
+       hero       light  → ● circle   dark
+       about      dark   → □ square   light
+       services   light  → + plus     dark
+       portfolio  dark   → × X cross  light
+       experience light  → + plus     dark   (reuse)
+       contact    dark   → ◆ diamond  accent
     ═══════════════════════════════════════════════ */
     #cur, #cur-r {
       position: fixed; pointer-events: none;
@@ -95,7 +92,7 @@
       will-change: left, top;
     }
 
-    /* ── BASE / HERO: filled dark circle ── */
+    /* ── HERO / base: filled dark circle ── */
     #cur {
       width: 10px; height: 10px;
       border-radius: 50%;
@@ -104,8 +101,7 @@
       transition:
         width .45s var(--ease), height .45s var(--ease),
         border-radius .45s var(--ease),
-        background .35s ease, border .35s ease,
-        opacity .35s ease;
+        background .35s ease, border .35s ease, opacity .35s ease;
     }
     #cur::before, #cur::after { display: none; }
 
@@ -121,26 +117,21 @@
         transform .5s var(--ease);
     }
 
-    /* ── ABOUT (dark bg): light square outline ── */
+    /* ── ABOUT (dark): light square outline ── */
     body[data-cur="sq"] #cur {
-      width: 13px; height: 13px;
-      border-radius: 0;
+      width: 13px; height: 13px; border-radius: 0;
       background: transparent;
       border: 1.5px solid rgba(245,243,238,.85);
     }
     body[data-cur="sq"] #cur-r {
-      width: 36px; height: 36px;
-      border-radius: 0;
-      border-color: rgba(245,243,238,.28);
-      opacity: 0.6;
+      width: 36px; height: 36px; border-radius: 0;
+      border-color: rgba(245,243,238,.28); opacity: 0.6;
     }
 
-    /* ── SKILLS (light bg): dark plus/cross ── */
+    /* ── SERVICES + EXPERIENCE (light): dark plus ── */
     body[data-cur="pl"] #cur {
-      width: 20px; height: 20px;
-      border-radius: 0;
-      background: transparent;
-      border: none;
+      width: 20px; height: 20px; border-radius: 0;
+      background: transparent; border: none;
     }
     body[data-cur="pl"] #cur::before,
     body[data-cur="pl"] #cur::after {
@@ -149,27 +140,21 @@
     }
     body[data-cur="pl"] #cur::before {
       width: 1.5px; height: 100%;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
+      top: 0; left: 50%; transform: translateX(-50%);
     }
     body[data-cur="pl"] #cur::after {
       width: 100%; height: 1.5px;
-      top: 50%; left: 0;
-      transform: translateY(-50%);
+      top: 50%; left: 0; transform: translateY(-50%);
     }
     body[data-cur="pl"] #cur-r {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      border-color: rgba(13,13,12,.2);
-      opacity: 0.35;
+      width: 38px; height: 38px; border-radius: 50%;
+      border-color: rgba(13,13,12,.2); opacity: 0.35;
     }
 
-    /* ── EXPERIENCE (dark bg): light X cross ── */
+    /* ── PORTFOLIO (dark): light X cross ── */
     body[data-cur="xx"] #cur {
-      width: 22px; height: 22px;
-      border-radius: 0;
-      background: transparent;
-      border: none;
+      width: 22px; height: 22px; border-radius: 0;
+      background: transparent; border: none;
     }
     body[data-cur="xx"] #cur::before,
     body[data-cur="xx"] #cur::after {
@@ -183,36 +168,28 @@
     body[data-cur="xx"] #cur::after  { transform: translateY(-50%) rotate(-45deg); }
     body[data-cur="xx"] #cur-r       { width: 0; height: 0; opacity: 0; }
 
-    /* ── CONTACT (dark bg): accent diamond solid ── */
+    /* ── CONTACT (dark): accent diamond ── */
     body[data-cur="dm"] #cur {
-      width: 12px; height: 12px;
-      border-radius: 0;
-      background: var(--accent);
-      border: none;
+      width: 12px; height: 12px; border-radius: 0;
+      background: var(--accent); border: none;
       transform: translate(-50%, -50%) rotate(45deg);
     }
     body[data-cur="dm"] #cur-r {
-      width: 34px; height: 34px;
-      border-radius: 0;
-      border-color: rgba(196,168,130,.4);
-      opacity: 0.5;
+      width: 34px; height: 34px; border-radius: 0;
+      border-color: rgba(196,168,130,.4); opacity: 0.5;
       transform: translate(-50%, -50%) rotate(45deg);
     }
 
-    /* ── Hover states (scale on interactive elements) ── */
+    /* ── Hover states ── */
     body[data-cur="ci"].c-on #cur,
-    body:not([data-cur]).c-on #cur { transform: translate(-50%,-50%) scale(2); opacity: 0.5; }
+    body:not([data-cur]).c-on #cur  { transform: translate(-50%,-50%) scale(2); opacity: 0.5; }
     body[data-cur="ci"].c-on #cur-r,
     body:not([data-cur]).c-on #cur-r { transform: translate(-50%,-50%) scale(1.9); opacity: 0.1; }
-
     body[data-cur="sq"].c-on #cur  { transform: translate(-50%,-50%) scale(1.6); opacity: 0.7; }
     body[data-cur="sq"].c-on #cur-r { transform: translate(-50%,-50%) scale(1.8); }
-
     body[data-cur="pl"].c-on #cur  { transform: translate(-50%,-50%) scale(1.5); opacity: 0.7; }
     body[data-cur="pl"].c-on #cur-r { transform: translate(-50%,-50%) scale(1.8); }
-
     body[data-cur="xx"].c-on #cur  { transform: translate(-50%,-50%) scale(1.6); opacity: 0.8; }
-
     body[data-cur="dm"].c-on #cur  { transform: translate(-50%,-50%) rotate(45deg) scale(1.7); }
     body[data-cur="dm"].c-on #cur-r { transform: translate(-50%,-50%) rotate(45deg) scale(2); }
 
@@ -228,18 +205,9 @@
       padding: 0 var(--pad);
       height: 76px;
     }
-
-    /* ── Logo: fixed viewBox to prevent clipping ── */
-    .nav-logo {
-      text-decoration: none;
-      display: flex; align-items: center;
-    }
-    /* viewBox "-10 6 82 44" captures all path extents with padding */
-    .nav-logo svg {
-      width: 54px; height: 29px;
-      overflow: visible;          /* belt-and-suspenders */
-    }
-    .nav-logo .lp { transition: stroke .4s ease; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo svg { width: 54px; height: 29px; overflow: visible; }
+    .nav-logo .lp  { transition: stroke .4s ease; }
     .nav-logo .ld-dot { transition: fill .4s ease; }
 
     .nav-links {
@@ -258,12 +226,10 @@
       position: absolute; bottom: -9px; left: 0;
       height: 1px; width: 0;
       background: var(--dark);
-      transition:
-        left .55s var(--ease), width .55s var(--ease),
-        background .35s ease, opacity .35s ease;
+      transition: left .55s var(--ease), width .55s var(--ease),
+                  background .35s ease, opacity .35s ease;
       opacity: 0;
     }
-
     .nav-right {
       display: flex; justify-content: flex-end; align-items: center; gap: 9px;
       font-family: 'Montserrat', sans-serif;
@@ -278,15 +244,14 @@
     }
     @keyframes dotPulse { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-    /* Inverted nav over dark sections */
-    #nav.inv .lp      { stroke: var(--light) !important; }
-    #nav.inv .ld-dot  { fill: var(--light) !important; }
+    #nav.inv .lp         { stroke: var(--light) !important; }
+    #nav.inv .ld-dot     { fill: var(--light) !important; }
     #nav.inv .nav-links a { color: var(--light); }
     #nav.inv #nav-line    { background: var(--light); }
     #nav.inv .nav-right   { color: rgba(245,243,238,.35); }
 
     /* ═══════════════════════════════════════════════
-       HERO (light bg)
+       HERO  (light)
     ═══════════════════════════════════════════════ */
     #hero {
       min-height: 100vh;
@@ -296,16 +261,12 @@
       position: relative; overflow: hidden;
       border-bottom: 1px solid var(--ll);
     }
-
     .hero-deco {
-      position: absolute;
-      top: 50%; right: 3%;
+      position: absolute; top: 50%; right: 3%;
       transform: translateY(-46%);
       width: min(42vw, 540px);
-      opacity: 0.045;
-      pointer-events: none; user-select: none;
+      opacity: 0.045; pointer-events: none; user-select: none;
     }
-
     .hero-name {
       font-family: 'Open Sans', sans-serif;
       font-weight: 800;
@@ -325,13 +286,12 @@
     .hero-bot {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-top: 44px; position: relative; z-index: 2;
-      opacity: 0;
-      animation: fadeUp .9s .45s var(--ease) forwards;
+      opacity: 0; animation: fadeUp .9s .45s var(--ease) forwards;
     }
     .hero-tag {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.9rem; font-weight: 300;
-      color: var(--mid); line-height: 1.8; max-width: 360px;
+      color: var(--mid); line-height: 1.8; max-width: 400px;
     }
     .hero-scroll {
       display: flex; align-items: center; gap: 14px;
@@ -352,7 +312,7 @@
        MARQUEE
     ═══════════════════════════════════════════════ */
     .mq { overflow: hidden; background: var(--dark); padding: 15px 0; }
-    .mq-track { display: flex; width: max-content; animation: mqScroll 24s linear infinite; }
+    .mq-track { display: flex; width: max-content; animation: mqScroll 26s linear infinite; }
     .mi {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.6rem; font-weight: 500;
@@ -364,7 +324,7 @@
     @keyframes mqScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
     /* ═══════════════════════════════════════════════
-       SHARED SECTION UTILITIES
+       SHARED UTILITIES
     ═══════════════════════════════════════════════ */
     .sec-lbl {
       display: flex; align-items: center; gap: 16px;
@@ -379,31 +339,24 @@
     .lbl-d { color: rgba(245,243,238,.28); }
     .lbl-d::before { background: rgba(245,243,238,.14); }
 
-    .rv {
-      opacity: 0; transform: translateY(30px);
-      transition: opacity .95s var(--ease), transform .95s var(--ease);
-    }
+    .rv { opacity: 0; transform: translateY(30px); transition: opacity .95s var(--ease), transform .95s var(--ease); }
     .rv.vis { opacity:1; transform:translateY(0); }
-    .d1 { transition-delay:.12s; }
-    .d2 { transition-delay:.25s; }
-    .d3 { transition-delay:.38s; }
-    .d4 { transition-delay:.50s; }
+    .d1 { transition-delay:.12s; } .d2 { transition-delay:.25s; }
+    .d3 { transition-delay:.38s; } .d4 { transition-delay:.50s; }
 
     /* ═══════════════════════════════════════════════
-       ABOUT (dark bg)
+       ABOUT  (dark)
     ═══════════════════════════════════════════════ */
     #about {
       background: var(--dark); color: var(--light);
       padding: 128px var(--pad);
       border-bottom: 1px solid var(--ld);
     }
-
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1.55fr;
       gap: 96px; align-items: start;
     }
-
     .about-headline {
       font-family: 'Open Sans', sans-serif;
       font-weight: 800;
@@ -415,12 +368,10 @@
       font-style: italic; font-family: 'Montserrat', sans-serif;
       font-weight: 300; color: var(--accent);
     }
-
     .about-meta { margin-top: 48px; display: flex; flex-direction: column; gap: 0; }
     .am-row {
       display: flex; flex-direction: column; gap: 5px;
-      padding: 20px 0;
-      border-top: 1px solid var(--ld);
+      padding: 20px 0; border-top: 1px solid var(--ld);
     }
     .am-row:last-child { border-bottom: 1px solid var(--ld); }
     .am-label {
@@ -434,7 +385,6 @@
       font-size: 0.82rem; font-weight: 400;
       color: rgba(245,243,238,.7); line-height: 1.5;
     }
-
     .about-body {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.91rem; font-weight: 300;
@@ -442,7 +392,6 @@
       margin-bottom: 28px;
     }
     .about-body strong { font-weight: 500; color: rgba(245,243,238,.78); }
-
     .about-pull {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
@@ -450,83 +399,155 @@
       line-height: 1.45; letter-spacing: -0.01em;
       color: var(--light);
       border-left: 2px solid var(--accent);
-      padding-left: 24px;
-      margin: 36px 0;
+      padding-left: 24px; margin: 36px 0;
     }
-
     .about-note {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.76rem; font-weight: 300;
-      line-height: 1.85;
-      color: rgba(245,243,238,.3);
-      font-style: italic;
-      margin-top: 32px;
+      line-height: 1.85; color: rgba(245,243,238,.3);
+      font-style: italic; margin-top: 32px;
     }
 
     /* ═══════════════════════════════════════════════
-       SKILLS (light bg)
+       SERVICES  (light)
     ═══════════════════════════════════════════════ */
-    #skills {
+    #services {
       background: var(--light);
       padding: 128px var(--pad);
       border-bottom: 1px solid var(--ll);
     }
-
-    .skills-header {
+    .services-header {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: end; margin-bottom: 72px;
     }
-    .skills-title {
+    .services-title {
       font-family: 'Open Sans', sans-serif;
       font-weight: 800;
       font-size: clamp(34px, 5vw, 70px);
       line-height: 0.95; letter-spacing: -0.03em;
     }
-    .skills-intro {
+    .services-intro {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.87rem; font-weight: 300;
       color: var(--mid); line-height: 1.85;
     }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
     }
-    .skill-card {
-      border: 1px solid var(--ll);
-      padding: 44px 40px;
+    .svc-card {
+      border: 1px solid var(--ll); padding: 44px 40px;
       transition: background .4s ease;
     }
-    .skill-card:hover { background: #EDEAE3; }
-    .sk-num {
+    .svc-card:hover { background: #EDEAE3; }
+    .svc-num {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.54rem; font-weight: 500;
       letter-spacing: 0.2em; color: var(--accent);
       margin-bottom: 24px; display: block;
     }
-    .sk-title {
+    .svc-title {
       font-family: 'Open Sans', sans-serif;
-      font-weight: 700;
-      font-size: 1rem; letter-spacing: -0.01em;
-      margin-bottom: 14px; display: block;
-      color: var(--dark);
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px; display: block; color: var(--dark);
     }
-    .sk-body {
+    .svc-body {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.79rem; font-weight: 300;
       line-height: 1.85; color: var(--mid);
     }
 
     /* ═══════════════════════════════════════════════
-       EXPERIENCE (dark bg)
+       PORTFOLIO  (dark)
     ═══════════════════════════════════════════════ */
-    #experience {
-      background: var(--dark); color: var(--light);
+    #portfolio {
+      background: var(--dark);
       padding: 128px var(--pad);
       border-bottom: 1px solid var(--ld);
     }
+    .port-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 80px;
+    }
+    .port-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(34px, 5.5vw, 80px);
+      line-height: 0.95; letter-spacing: -0.035em;
+      color: var(--light);
+    }
+    .port-note {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem; font-weight: 300;
+      color: rgba(245,243,238,.38); max-width: 260px;
+      line-height: 1.7; text-align: right; padding-bottom: 6px;
+    }
 
+    .port-sublabel {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.54rem; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(245,243,238,.3);
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 32px;
+    }
+    .port-sublabel::before { content:''; display:block; width:22px; height:1px; background:rgba(245,243,238,.2); }
+
+    /* Web project cards */
+    .web-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    }
+    .web-card {
+      background: #1A1A18;
+      padding: 48px 44px;
+      text-decoration: none; color: var(--light);
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 260px; position: relative; overflow: hidden;
+      transition: background .4s ease;
+    }
+    .web-card:hover { background: #232321; }
+    .web-card::after {
+      content: '↗'; position: absolute; top: 30px; right: 34px;
+      font-family: 'Montserrat', sans-serif; font-size: 1.2rem;
+      color: rgba(245,243,238,.25);
+      transition: transform .4s var(--ease), color .3s ease;
+    }
+    .web-card:hover::after { transform: translate(4px,-4px); color: var(--accent); }
+    .wc-name {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: clamp(16px, 1.8vw, 24px);
+      letter-spacing: -0.015em; line-height: 1.2;
+      color: var(--light);
+    }
+    .wc-url {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.57rem; font-weight: 500;
+      letter-spacing: 0.14em; color: var(--accent);
+      display: block; margin-top: 8px;
+    }
+    .wc-desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.79rem; font-weight: 300;
+      color: rgba(245,243,238,.38); line-height: 1.75; margin-top: 18px;
+    }
+    .wc-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .wc-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.52rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(245,243,238,.3);
+      border: 1px solid rgba(245,243,238,.1); padding: 5px 12px;
+    }
+
+    /* ═══════════════════════════════════════════════
+       EXPERIENCE  (light)
+    ═══════════════════════════════════════════════ */
+    #experience {
+      background: var(--light);
+      padding: 128px var(--pad);
+      border-bottom: 1px solid var(--ll);
+    }
     .exp-header {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-bottom: 80px;
@@ -536,40 +557,34 @@
       font-weight: 800;
       font-size: clamp(32px, 5.5vw, 78px);
       line-height: 0.95; letter-spacing: -0.035em;
-      color: var(--light);
+      color: var(--dark);
     }
-    .exp-edu {
-      text-align: right;
-      padding-bottom: 4px;
-    }
+    .exp-edu { text-align: right; padding-bottom: 4px; }
     .edu-label {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.52rem; font-weight: 500;
       letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(245,243,238,.26);
-      display: block; margin-bottom: 10px;
+      color: rgba(13,13,12,.3); display: block; margin-bottom: 10px;
     }
     .edu-entry { margin-bottom: 14px; }
     .edu-name {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700; font-size: 0.84rem;
-      color: var(--light); display: block; margin-bottom: 3px;
+      color: var(--dark); display: block; margin-bottom: 3px;
     }
     .edu-sub {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.7rem; font-weight: 300;
-      color: rgba(245,243,238,.38); display: block;
+      color: var(--mid); display: block;
     }
-
     .exp-list { list-style: none; }
     .exp-item {
       display: grid;
       grid-template-columns: 200px 1px 1fr;
-      gap: 0 52px;
-      padding: 56px 0;
-      border-top: 1px solid var(--ld);
+      gap: 0 52px; padding: 56px 0;
+      border-top: 1px solid var(--ll);
     }
-    .exp-item:last-child { border-bottom: 1px solid var(--ld); }
+    .exp-item:last-child { border-bottom: 1px solid var(--ll); }
 
     .exp-date-col { padding-top: 2px; }
     .exp-period {
@@ -581,63 +596,51 @@
     .exp-company {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700; font-size: 0.8rem;
-      color: rgba(245,243,238,.5);
-      display: block; line-height: 1.4;
+      color: rgba(13,13,12,.5); display: block; line-height: 1.4;
     }
     .exp-location {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.58rem; font-weight: 300;
-      color: rgba(245,243,238,.28);
-      display: block; margin-top: 6px;
+      color: rgba(13,13,12,.3); display: block; margin-top: 6px;
     }
-
-    /* Timeline vertical line */
     .exp-line {
-      width: 1px; background: rgba(245,243,238,.07);
-      position: relative; flex-shrink: 0;
+      width: 1px; background: var(--ll); position: relative; flex-shrink: 0;
     }
     .exp-line::before {
-      content: '';
-      position: absolute; top: 6px; left: 50%;
+      content: ''; position: absolute; top: 6px; left: 50%;
       transform: translateX(-50%);
       width: 7px; height: 7px;
       border: 1.5px solid var(--accent);
-      background: var(--dark);
+      background: var(--light);
     }
-
     .exp-content-col { padding-top: 2px; }
     .exp-role {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
       font-size: clamp(17px, 1.9vw, 26px);
-      letter-spacing: -0.015em;
-      color: var(--light);
+      letter-spacing: -0.015em; color: var(--dark);
       margin-bottom: 18px; display: block;
     }
     .exp-desc {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.83rem; font-weight: 300;
-      line-height: 1.95; color: rgba(245,243,238,.44);
-      max-width: 560px;
+      line-height: 1.95; color: var(--mid); max-width: 560px;
     }
     .exp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
     .exp-tag {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.53rem; font-weight: 500;
       letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(245,243,238,.32);
-      border: 1px solid rgba(245,243,238,.1);
-      padding: 6px 14px;
+      color: var(--mid); border: 1px solid var(--ll); padding: 6px 14px;
     }
 
     /* ═══════════════════════════════════════════════
-       CONTACT (dark bg)
+       CONTACT  (dark)
     ═══════════════════════════════════════════════ */
     #contact {
       background: var(--dark); color: var(--light);
       padding: 128px var(--pad) 100px;
     }
-
     .contact-h {
       font-family: 'Open Sans', sans-serif;
       font-weight: 800;
@@ -649,20 +652,17 @@
       font-style: italic; font-family: 'Montserrat', sans-serif;
       font-weight: 300; color: var(--accent);
     }
-
     .contact-row {
       display: flex; justify-content: space-between; align-items: flex-end;
       border-top: 1px solid var(--ld);
-      padding-top: 56px;
-      flex-wrap: wrap; gap: 40px;
+      padding-top: 56px; flex-wrap: wrap; gap: 40px;
     }
     .contact-links { display: flex; flex-direction: column; gap: 14px; }
     .c-link {
       font-family: 'Montserrat', sans-serif;
       font-size: clamp(13px, 1.75vw, 20px); font-weight: 300;
       color: var(--light); text-decoration: none;
-      position: relative; padding-bottom: 3px;
-      display: inline-block;
+      position: relative; padding-bottom: 3px; display: inline-block;
     }
     .c-link::after {
       content:''; position:absolute; bottom:0; left:0;
@@ -671,7 +671,6 @@
       transition: transform .55s var(--ease);
     }
     .c-link:hover::after { transform: scaleX(1); }
-
     .contact-socials { display: flex; gap: 30px; align-items: flex-end; }
     .c-soc {
       font-family: 'Montserrat', sans-serif;
@@ -681,12 +680,10 @@
       transition: color .3s;
     }
     .c-soc:hover { color: var(--light); }
-
     .c-copy {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.54rem; font-weight: 400;
-      letter-spacing: 0.14em;
-      color: rgba(245,243,238,.18);
+      letter-spacing: 0.14em; color: rgba(245,243,238,.18);
       align-self: flex-end;
     }
 
@@ -707,31 +704,35 @@
        RESPONSIVE
     ═══════════════════════════════════════════════ */
     @media (max-width: 1024px) {
-      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 900px) {
       :root { --pad: 28px; }
-      .about-grid { grid-template-columns: 1fr; gap: 52px; }
-      .skills-header { grid-template-columns: 1fr; gap: 24px; }
-      .exp-item { grid-template-columns: 1fr; gap: 20px; }
-      .exp-line { display: none; }
-      .exp-header { flex-direction: column; gap: 32px; align-items: flex-start; }
-      .exp-edu { text-align: left; }
-      .nav-right { display: none; }
-      #nav { grid-template-columns: auto 1fr; }
-      .nav-links { justify-content: flex-end; gap: 28px; }
+      .about-grid    { grid-template-columns: 1fr; gap: 52px; }
+      .services-header { grid-template-columns: 1fr; gap: 24px; }
+      .exp-item      { grid-template-columns: 1fr; gap: 20px; }
+      .exp-line      { display: none; }
+      .exp-header    { flex-direction: column; gap: 32px; align-items: flex-start; }
+      .exp-edu       { text-align: left; }
+      .port-header   { flex-direction: column; gap: 24px; align-items: flex-start; }
+      .port-note     { text-align: left; }
+      .web-grid      { grid-template-columns: 1fr; }
+      .nav-right     { display: none; }
+      #nav           { grid-template-columns: auto 1fr; }
+      .nav-links     { justify-content: flex-end; gap: 28px; }
     }
     @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .contact-row { flex-direction: column; align-items: flex-start; gap: 28px; }
-      footer { flex-direction: column; gap: 8px; text-align: center; }
+      .services-grid { grid-template-columns: 1fr; }
+      .logo-grid     { grid-template-columns: 1fr; }
+      .contact-row   { flex-direction: column; align-items: flex-start; gap: 28px; }
+      footer         { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
 
 <body data-sec="hero" data-cur="ci">
 
-  <!-- ══════════════ LOADER ═══════════════════════ -->
+  <!-- ════════════════ LOADER ═════════════════════ -->
   <div id="loader">
     <div class="loader-wrap">
       <svg class="l-orbit" viewBox="0 0 140 140"
@@ -740,7 +741,6 @@
           fill="none" stroke="var(--dark)" stroke-width="0.8"
           stroke-dasharray="5 14" stroke-linecap="round"/>
       </svg>
-      <!-- Aries logo — viewBox wide enough to show all paths -->
       <svg class="l-logo" viewBox="-10 6 82 44" fill="none">
         <path d="M 31,44 C 28,30 12,10 2,17 C -4,22 -1,37 7,41 C 10,44 17,45 19,40"/>
         <path d="M 31,44 C 34,30 50,10 60,17 C 66,22 63,37 55,41 C 52,44 45,45 43,40"/>
@@ -750,13 +750,12 @@
     <span class="loader-name">Hussnain Raza</span>
   </div>
 
-  <!-- ══════════════ CURSOR ════════════════════════ -->
+  <!-- ════════════════ CURSOR ══════════════════════ -->
   <div id="cur"></div>
   <div id="cur-r"></div>
 
-  <!-- ══════════════ NAV ══════════════════════════ -->
+  <!-- ════════════════ NAV ═════════════════════════ -->
   <nav id="nav">
-    <!-- Aries logo mark — viewBox accommodates full path extents -->
     <a href="#hero" class="nav-logo" aria-label="Home">
       <svg viewBox="-10 6 82 44" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path class="lp"
@@ -769,24 +768,21 @@
       </svg>
     </a>
 
-    <!-- Centered nav links -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about"      data-sec="about">About</a></li>
-      <li><a href="#experience" data-sec="experience">Experience</a></li>
-      <li><a href="#contact"    data-sec="contact">Contact</a></li>
+      <li><a href="#about"     data-sec="about">About</a></li>
+      <li><a href="#portfolio" data-sec="portfolio">Work</a></li>
+      <li><a href="#contact"   data-sec="contact">Contact</a></li>
       <span id="nav-line"></span>
     </ul>
 
     <div class="nav-right">
       <span class="dot-avail"></span>
-      <span>Open to opportunities</span>
+      <span>Available on Upwork</span>
     </div>
   </nav>
 
-  <!-- ══════════════ HERO ══════════════════════════ -->
+  <!-- ════════════════ HERO ════════════════════════ -->
   <section id="hero">
-
-    <!-- Faint decorative Aries constellation -->
     <svg class="hero-deco" viewBox="0 0 580 500" fill="none"
          stroke="var(--dark)" stroke-linecap="round" stroke-linejoin="round">
       <path d="M 290 418 C 278 318 136 94 22 146 C -36 176 -4 308 52 360 C 74 384 116 390 144 362"
@@ -807,17 +803,15 @@
       <circle cx="290" cy="418" r="6" fill="var(--dark)" stroke="none" opacity="0.45"/>
     </svg>
 
-    <!-- Name only — no side text, no role buttons -->
     <div class="hero-name">
       <div class="nl"><span>Hussnain</span></div>
       <div class="nl"><span>Raza</span></div>
     </div>
 
-    <!-- Tagline + scroll hint -->
     <div class="hero-bot">
       <p class="hero-tag">
-        I don't just communicate — I connect.<br>
-        Patient, precise, and genuinely invested in the work.
+        Graphic designer & web builder based in Lahore.<br>
+        Brands that mean something. Websites that work.
       </p>
       <div class="hero-scroll">
         <span class="scroll-ln"></span>
@@ -826,55 +820,55 @@
     </div>
   </section>
 
-  <!-- ══════════════ MARQUEE ═══════════════════════ -->
+  <!-- ════════════════ MARQUEE ═════════════════════ -->
   <div class="mq">
     <div class="mq-track">
-      <span class="mi">Chat & Email Support<span class="ms">✦</span></span>
-      <span class="mi">Customer Success<span class="ms">✦</span></span>
-      <span class="mi">Quality Assurance<span class="ms">✦</span></span>
-      <span class="mi">Remote Operations<span class="ms">✦</span></span>
-      <span class="mi">Client Communication<span class="ms">✦</span></span>
-      <span class="mi">Technical Support<span class="ms">✦</span></span>
-      <span class="mi">Brand & Identity Design<span class="ms">✦</span></span>
-      <span class="mi">U.S. Time Zones<span class="ms">✦</span></span>
-      <!-- duplicate for seamless loop -->
-      <span class="mi">Chat & Email Support<span class="ms">✦</span></span>
-      <span class="mi">Customer Success<span class="ms">✦</span></span>
-      <span class="mi">Quality Assurance<span class="ms">✦</span></span>
-      <span class="mi">Remote Operations<span class="ms">✦</span></span>
-      <span class="mi">Client Communication<span class="ms">✦</span></span>
-      <span class="mi">Technical Support<span class="ms">✦</span></span>
-      <span class="mi">Brand & Identity Design<span class="ms">✦</span></span>
-      <span class="mi">U.S. Time Zones<span class="ms">✦</span></span>
+      <span class="mi">Brand Identity<span class="ms">✦</span></span>
+      <span class="mi">Logo Design<span class="ms">✦</span></span>
+      <span class="mi">Web Design<span class="ms">✦</span></span>
+      <span class="mi">WordPress<span class="ms">✦</span></span>
+      <span class="mi">Elementor<span class="ms">✦</span></span>
+      <span class="mi">Social Media Design<span class="ms">✦</span></span>
+      <span class="mi">Visual Identity<span class="ms">✦</span></span>
+      <span class="mi">UI Design<span class="ms">✦</span></span>
+      <span class="mi">Canva<span class="ms">✦</span></span>
+      <span class="mi">Typography<span class="ms">✦</span></span>
+      <!-- duplicate -->
+      <span class="mi">Brand Identity<span class="ms">✦</span></span>
+      <span class="mi">Logo Design<span class="ms">✦</span></span>
+      <span class="mi">Web Design<span class="ms">✦</span></span>
+      <span class="mi">WordPress<span class="ms">✦</span></span>
+      <span class="mi">Elementor<span class="ms">✦</span></span>
+      <span class="mi">Social Media Design<span class="ms">✦</span></span>
+      <span class="mi">Visual Identity<span class="ms">✦</span></span>
+      <span class="mi">UI Design<span class="ms">✦</span></span>
+      <span class="mi">Canva<span class="ms">✦</span></span>
+      <span class="mi">Typography<span class="ms">✦</span></span>
     </div>
   </div>
 
-  <!-- ══════════════ ABOUT (dark) ═════════════════ -->
+  <!-- ════════════════ ABOUT  (dark) ══════════════ -->
   <section id="about">
-    <div class="sec-lbl lbl-d">01 — The Story</div>
+    <div class="sec-lbl lbl-d">01 — About</div>
 
     <div class="about-grid">
 
-      <!-- Left: headline + quick facts -->
       <div>
         <h2 class="about-headline rv">
-          Three years.<br>Three roles.<br><em>One thread.</em>
+          Design with<br><em>intention.</em><br>Every pixel<br>earns its place.
         </h2>
-
         <div class="about-meta rv d1">
           <div class="am-row">
-            <span class="am-label">Location</span>
+            <span class="am-label">Based In</span>
             <span class="am-val">Lahore, Pakistan</span>
           </div>
           <div class="am-row">
             <span class="am-label">Availability</span>
-            <span class="am-val">Remote · U.S. / U.K. time zones · Night shifts</span>
+            <span class="am-val">Freelance · Upwork · Remote worldwide</span>
           </div>
           <div class="am-row">
-            <span class="am-label">Education</span>
-            <span class="am-val">BS Accounting & Finance (Marketing)<br>
-              <span style="color:rgba(245,243,238,.3);font-size:0.75rem;">Lahore Garrison University · 2021–2025</span>
-            </span>
+            <span class="am-label">Speciality</span>
+            <span class="am-val">Brand Identity · Web Design · Social Media</span>
           </div>
           <div class="am-row">
             <span class="am-label">Contact</span>
@@ -883,79 +877,166 @@
         </div>
       </div>
 
-      <!-- Right: narrative -->
       <div>
         <p class="about-body rv">
-          Whether I was <strong>monitoring customer interactions in quality assurance</strong>, supporting outreach and client engagement in business development, or <strong>managing design and website deliverables</strong> for U.S.-based clients — the work always came back to the same thing: communication, care, and consistency.
+          I'm Hussnain — a graphic designer and web designer with a background in delivering visual work for international clients across the U.S. and U.K. I design <strong>logos and brand identities</strong> that give businesses a clear, consistent face, and I build <strong>WordPress websites</strong> that look intentional and function smoothly.
         </p>
 
         <div class="about-pull rv d1">
-          "I'm not coming to your team with all the answers. I'm coming ready to ask the right questions — and actually act on them."
+          "Good design isn't decoration. It's the first thing a client notices — and the last thing they forget."
         </div>
 
         <p class="about-body rv d1">
-          I'm 23, still in university, and honest about where I stand. I've operated across QA, business development, and client-facing design roles — each one teaching me something different, each one pulling me closer to <strong>customer success and support</strong> as the place where my skills make the most sense.
+          My work spans brand identity systems, logo design, social media graphics, website builds, and digital content for clients in energy, cybersecurity, telecom, marketing, and more. I've worked directly with business owners — gathering their vision, translating it into visual decisions, and delivering work that holds up across every format it's used in.
         </p>
 
         <p class="about-body rv d2">
-          I pick things up quickly, take feedback without friction, and genuinely care about the outcome of whatever I'm working on. I've worked U.S. night shifts. I've managed revision cycles. I've maintained quality benchmarks across fast-paced remote environments. The work isn't new to me — just the title.
+          I work remotely, communicate clearly, meet deadlines, and take revisions seriously. I understand that the work I deliver is someone's first impression — and I design it like it matters. Because it does.
         </p>
 
         <p class="about-note rv d3">
-          I'm also willing to unlearn. Whatever I've picked up that doesn't serve the role or the customer — I'll set it down. Growth isn't just adding skills. It's knowing which ones to let go.
+          Currently taking on freelance projects via Upwork. Whether you need a logo built from scratch, a website redesigned, or a social media visual system — let's talk.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ SKILLS (light) ═══════════════ -->
-  <section id="skills">
-    <div class="sec-lbl lbl-l">02 — What I Bring</div>
+  <!-- ════════════════ SERVICES  (light) ══════════ -->
+  <section id="services">
+    <div class="sec-lbl lbl-l">02 — Services</div>
 
-    <div class="skills-header">
-      <h2 class="skills-title rv">Skills &<br>Strengths</h2>
-      <p class="skills-intro rv d1">
-        Not a list of buzzwords. These are things I've done repeatedly, across different companies and time zones — and the thinking behind why they matter in customer-facing roles.
+    <div class="services-header">
+      <h2 class="services-title rv">What<br>I Design</h2>
+      <p class="services-intro rv d1">
+        From first concept to final delivery — here's what I bring to every project. Clean, intentional design work built for real businesses and real results.
       </p>
     </div>
 
-    <div class="skills-grid">
-      <div class="skill-card rv">
-        <span class="sk-num">01</span>
-        <span class="sk-title">Chat & Email Support</span>
-        <p class="sk-body">Handled client communication end-to-end — requirements, revision cycles, follow-ups — across multiple live projects simultaneously. Precision in writing is what stops small issues from becoming escalations.</p>
+    <div class="services-grid">
+      <div class="svc-card rv">
+        <span class="svc-num">01</span>
+        <span class="svc-title">Brand Identity & Logo Design</span>
+        <p class="svc-body">I design logos and brand identity systems that give businesses a clear, memorable face. From the initial mark to colour palettes, typography, and usage guidelines — built for consistency across every touchpoint.</p>
       </div>
-      <div class="skill-card rv d1">
-        <span class="sk-num">02</span>
-        <span class="sk-title">Quality Assurance</span>
-        <p class="sk-body">Conducted quality audits and monitored customer interactions to ensure service standards and compliance. Maintained detailed QA reports and supported continuous process improvement across contact center environments.</p>
+      <div class="svc-card rv d1">
+        <span class="svc-num">02</span>
+        <span class="svc-title">Web Design & WordPress</span>
+        <p class="svc-body">I design and build WordPress websites using Elementor — clean layouts, strong visual hierarchy, and brand-aligned design. From landing pages to full multi-page sites, built to look great and load fast.</p>
       </div>
-      <div class="skill-card rv d2">
-        <span class="sk-num">03</span>
-        <span class="sk-title">Remote Collaboration</span>
-        <p class="sk-body">All three of my professional roles have been remote or hybrid. I've worked U.S. night shifts, coordinated across time zones, and maintained consistent performance in fast-paced remote settings.</p>
+      <div class="svc-card rv d2">
+        <span class="svc-num">03</span>
+        <span class="svc-title">Social Media Design</span>
+        <p class="svc-body">Posts, stories, banners, and profile kits for Facebook, Instagram, and LinkedIn. Consistent, eye-catching content that keeps your brand looking professional across every platform you show up on.</p>
       </div>
-      <div class="skill-card rv d1">
-        <span class="sk-num">04</span>
-        <span class="sk-title">Client Communication</span>
-        <p class="sk-body">I've managed client requirements, implemented revisions, and ensured final delivery meets expectations — in both design and business development contexts. I know how to keep a project and a relationship on track.</p>
+      <div class="svc-card rv d1">
+        <span class="svc-num">04</span>
+        <span class="svc-title">Visual Identity Systems</span>
+        <p class="svc-body">Beyond the logo — colour systems, font pairings, design language, and visual rules that make sure your brand looks and feels the same whether it's on a business card, a website, or a social post.</p>
       </div>
-      <div class="skill-card rv d2">
-        <span class="sk-num">05</span>
-        <span class="sk-title">Tools & Platforms</span>
-        <p class="sk-body">Slack · Zoom · Microsoft Teams · Google Meet · Email communication tools · Canva · WordPress (Elementor) · Social media design. Comfortable adapting to new tools quickly.</p>
+      <div class="svc-card rv d2">
+        <span class="svc-num">05</span>
+        <span class="svc-title">Presentations & Digital Content</span>
+        <p class="svc-body">Pitch decks, company presentations, promotional graphics, and digital marketing assets — designed to communicate clearly and leave a strong impression with whoever's on the receiving end.</p>
       </div>
-      <div class="skill-card rv d3">
-        <span class="sk-num">06</span>
-        <span class="sk-title">Adaptability</span>
-        <p class="sk-body">Three different roles across three years — QA, business development, and design. Each required a different skill set picked up on the job. I'm comfortable being uncomfortable. That's where the real learning happens.</p>
+      <div class="svc-card rv d3">
+        <span class="svc-num">06</span>
+        <span class="svc-title">Tools I Work In</span>
+        <p class="svc-body">Canva · WordPress · Elementor · Adobe Express · Figma (layouts & mockups) · Google Slides · Photoshop (basic). I choose the right tool for the job and deliver in whatever format you need.</p>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ EXPERIENCE (dark) ════════════ -->
+  <!-- ════════════════ PORTFOLIO  (dark) ══════════ -->
+  <section id="portfolio">
+    <div class="sec-lbl lbl-d">03 — Selected Work</div>
+
+    <div class="port-header">
+      <h2 class="port-title rv">Brand &<br>Web Projects</h2>
+      <p class="port-note rv d1">
+        A selection of logo, identity, and website work delivered for real clients across different industries.
+      </p>
+    </div>
+
+    <!-- Web Design work -->
+    <div class="port-sublabel rv">Web Design & Development</div>
+    <div class="web-grid rv">
+
+      <a href="https://quickbroadband.net/" target="_blank" class="web-card">
+        <div>
+          <span class="wc-name">Quick Broadband</span>
+          <span class="wc-url">quickbroadband.net</span>
+          <p class="wc-desc">Full website design and WordPress build for a U.S. broadband comparison platform. Custom layout, brand-aligned visuals, and a clear UX structure for converting visitors into customers.</p>
+        </div>
+        <div class="wc-tags">
+          <span class="wc-tag">WordPress</span>
+          <span class="wc-tag">Elementor</span>
+          <span class="wc-tag">Web Design</span>
+          <span class="wc-tag">Brand Design</span>
+        </div>
+      </a>
+
+      <a href="https://texaspower.us/" target="_blank" class="web-card">
+        <div>
+          <span class="wc-name">Texas Power</span>
+          <span class="wc-url">texaspower.us</span>
+          <p class="wc-desc">Website design and build for a Texas-based energy service provider. Full layout design, page structure, and visual brand application across every section of the site.</p>
+        </div>
+        <div class="wc-tags">
+          <span class="wc-tag">WordPress</span>
+          <span class="wc-tag">Elementor</span>
+          <span class="wc-tag">Web Design</span>
+          <span class="wc-tag">Energy Sector</span>
+        </div>
+      </a>
+
+      <a href="https://blackbannermarketing.com/" target="_blank" class="web-card">
+        <div>
+          <span class="wc-name">Black Banner Marketing</span>
+          <span class="wc-url">blackbannermarketing.com</span>
+          <p class="wc-desc">Agency website built to reflect a bold editorial brand identity. High-contrast design, clean layout, and strong conversion-focused structure throughout the site.</p>
+        </div>
+        <div class="wc-tags">
+          <span class="wc-tag">WordPress</span>
+          <span class="wc-tag">Elementor</span>
+          <span class="wc-tag">Editorial Design</span>
+          <span class="wc-tag">Marketing Agency</span>
+        </div>
+      </a>
+
+      <a href="https://overseasexperts.net/" target="_blank" class="web-card">
+        <div>
+          <span class="wc-name">Overseas Experts</span>
+          <span class="wc-url">overseasexperts.net</span>
+          <p class="wc-desc">Professional consultancy website designed around clarity and trust. Structured information architecture and clean visual layout for an overseas services brand.</p>
+        </div>
+        <div class="wc-tags">
+          <span class="wc-tag">WordPress</span>
+          <span class="wc-tag">Web Design</span>
+          <span class="wc-tag">UX Structure</span>
+          <span class="wc-tag">Consultancy</span>
+        </div>
+      </a>
+
+      <a href="https://azfardigital.com/" target="_blank" class="web-card">
+        <div>
+          <span class="wc-name">Azfar Digital</span>
+          <span class="wc-url">azfardigital.com</span>
+          <p class="wc-desc">Personal brand and digital consulting website. Visual identity application and page design built around the founder's personal brand voice — clean, minimal, and direct.</p>
+        </div>
+        <div class="wc-tags">
+          <span class="wc-tag">WordPress</span>
+          <span class="wc-tag">Personal Brand</span>
+          <span class="wc-tag">Visual Design</span>
+          <span class="wc-tag">Elementor</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ EXPERIENCE  (light) ════════ -->
   <section id="experience">
-    <div class="sec-lbl lbl-d">03 — Experience</div>
+    <div class="sec-lbl lbl-l">04 — Experience</div>
 
     <div class="exp-header">
       <h2 class="exp-title rv">Work<br>History</h2>
@@ -974,7 +1055,6 @@
 
     <ul class="exp-list">
 
-      <!-- Role 1 -->
       <li class="exp-item rv">
         <div class="exp-date-col">
           <span class="exp-period">Nov 2024 – Present</span>
@@ -983,19 +1063,19 @@
         </div>
         <div class="exp-line"></div>
         <div class="exp-content-col">
-          <span class="exp-role">Web Dev & Graphic Design Specialist</span>
-          <p class="exp-desc">Design digital content — social media graphics, presentations, and website layouts — based on client requirements. Build and edit WordPress websites using Elementor, including layout improvements and content updates. Communicate directly with clients to manage requirements, revisions, and project delivery in a fully remote environment.</p>
+          <span class="exp-role">Graphic Design & Web Design Specialist</span>
+          <p class="exp-desc">Designing logos, brand identities, social media graphics, presentations, and full website layouts for U.S.-based clients across multiple industries. Building and customising WordPress websites with Elementor — handling everything from layout structure to visual design. Working directly with clients on briefs, revisions, and final delivery in a remote environment.</p>
           <div class="exp-tags">
-            <span class="exp-tag">Client Communication</span>
+            <span class="exp-tag">Logo Design</span>
+            <span class="exp-tag">Brand Identity</span>
             <span class="exp-tag">WordPress · Elementor</span>
-            <span class="exp-tag">Canva</span>
             <span class="exp-tag">Social Media Design</span>
-            <span class="exp-tag">Remote Delivery</span>
+            <span class="exp-tag">Canva</span>
+            <span class="exp-tag">Client Delivery</span>
           </div>
         </div>
       </li>
 
-      <!-- Role 2 -->
       <li class="exp-item rv d1">
         <div class="exp-date-col">
           <span class="exp-period">Aug 2024 – Dec 2024</span>
@@ -1004,19 +1084,18 @@
         </div>
         <div class="exp-line"></div>
         <div class="exp-content-col">
-          <span class="exp-role">Business Development / Digital Marketing Associate</span>
-          <p class="exp-desc">Supported business development through outreach and client engagement on professional platforms. Transitioned into digital marketing sales, assisting with client communication and follow-ups for U.S.-based services. Gained hands-on experience in client-facing communication and coordinating with remote teams across time zones.</p>
+          <span class="exp-role">Digital Marketing Associate</span>
+          <p class="exp-desc">Contributed to digital marketing efforts including the design of social media content, promotional graphics, and visual assets for outreach campaigns targeting U.S.-based clients. Gained hands-on experience working within a brand's visual system and producing content that stayed consistent with the company's identity across platforms.</p>
           <div class="exp-tags">
-            <span class="exp-tag">Business Development</span>
-            <span class="exp-tag">Client Outreach</span>
+            <span class="exp-tag">Social Media Content</span>
             <span class="exp-tag">Digital Marketing</span>
-            <span class="exp-tag">Remote Team Coordination</span>
-            <span class="exp-tag">Follow-ups & CRM</span>
+            <span class="exp-tag">Visual Assets</span>
+            <span class="exp-tag">Brand Consistency</span>
+            <span class="exp-tag">Remote Collaboration</span>
           </div>
         </div>
       </li>
 
-      <!-- Role 3 -->
       <li class="exp-item rv d2">
         <div class="exp-date-col">
           <span class="exp-period">Sep 2022 – Jun 2024</span>
@@ -1026,13 +1105,12 @@
         <div class="exp-line"></div>
         <div class="exp-content-col">
           <span class="exp-role">Quality Assurance Specialist</span>
-          <p class="exp-desc">Conducted quality audits and monitored customer interactions to ensure service standards and compliance. Reviewed performance, maintained quality reports, and supported continuous process improvement. Worked in fast-paced contact center environments supporting U.S.-based operations during night shifts — where I learned what professional discipline actually looks like.</p>
+          <p class="exp-desc">Worked in a quality-focused remote operations role — building habits of precision, attention to detail, and consistent delivery that directly shape how I approach design work today. Remote-first, deadline-driven, and standards-obsessed: three things that carried straight into my design career.</p>
           <div class="exp-tags">
-            <span class="exp-tag">Call Auditing</span>
-            <span class="exp-tag">QA Reporting</span>
-            <span class="exp-tag">Performance Monitoring</span>
-            <span class="exp-tag">Process Improvement</span>
-            <span class="exp-tag">U.S. Night Shifts</span>
+            <span class="exp-tag">Attention to Detail</span>
+            <span class="exp-tag">Remote Operations</span>
+            <span class="exp-tag">Process Standards</span>
+            <span class="exp-tag">U.S. Time Zones</span>
           </div>
         </div>
       </li>
@@ -1040,12 +1118,12 @@
     </ul>
   </section>
 
-  <!-- ══════════════ CONTACT (dark) ═══════════════ -->
+  <!-- ════════════════ CONTACT  (dark) ════════════ -->
   <section id="contact">
-    <div class="sec-lbl lbl-d">04 — Let's Talk</div>
+    <div class="sec-lbl lbl-d">05 — Let's Work Together</div>
 
     <h2 class="contact-h rv">
-      Got a role<br>worth <em>growing</em><br>into?
+      Got a project<br>that needs<br><em>great design?</em>
     </h2>
 
     <div class="contact-row rv d1">
@@ -1054,22 +1132,23 @@
         <a href="tel:+923094429453" class="c-link">+92 309 4429453</a>
       </div>
       <div class="contact-socials">
-        <!-- ★ Replace # with your actual profile URLs -->
-        <a href="#" target="_blank" class="c-soc">LinkedIn</a>
+        <!-- ★ Replace # with your real Upwork, Behance, Instagram links -->
+        <a href="#" target="_blank" class="c-soc">Upwork</a>
         <a href="#" target="_blank" class="c-soc">Behance</a>
         <a href="#" target="_blank" class="c-soc">Instagram</a>
+        <a href="#" target="_blank" class="c-soc">LinkedIn</a>
       </div>
       <span class="c-copy">©2025 Hussnain Raza</span>
     </div>
   </section>
 
-  <!-- ══════════════ FOOTER ═════════════════════════ -->
+  <!-- ════════════════ FOOTER ══════════════════════ -->
   <footer>
-    <span>Hussnain Raza — Customer Success & Support</span>
-    <span>Lahore, Pakistan · Open to Remote</span>
+    <span>Hussnain Raza — Graphic & Web Designer</span>
+    <span>Lahore, Pakistan · Available for Freelance</span>
   </footer>
 
-  <!-- ══════════════ SCRIPT ═════════════════════════ -->
+  <!-- ════════════════ SCRIPT ══════════════════════ -->
   <script>
     /* ── LOADER ── */
     window.addEventListener('load', () => {
@@ -1080,7 +1159,7 @@
       }, 2800);
     });
 
-    /* ── CURSOR tracking ── */
+    /* ── CURSOR ── */
     const cur  = document.getElementById('cur');
     const curR = document.getElementById('cur-r');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -1098,37 +1177,39 @@
       requestAnimationFrame(tick);
     })();
 
-    /* Hover state on interactive elements */
-    document.querySelectorAll('a, button, .skill-card').forEach(el => {
+    document.querySelectorAll('a, button, .svc-card, .logo-card, .web-card').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('c-on'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('c-on'));
     });
 
-    /* ── SECTION → CURSOR SHAPE + NAV colour ──
-       section bg   cursor shape
-       hero  light  ● circle   dark
-       about dark   □ square   light
-       skills light + plus     dark
-       exp   dark   × X        light
-       contact dark ◆ diamond  accent
+    /* ── SECTION DETECTION ──
+       Section     bg      cursor
+       hero        light   ci (circle, dark)
+       about       dark    sq (square, light)
+       services    light   pl (plus, dark)
+       portfolio   dark    xx (X cross, light)
+       experience  light   pl (plus, dark)
+       contact     dark    dm (diamond, accent)
     ── */
     const mainNav  = document.getElementById('nav');
-    const darkSecs = new Set(['about', 'experience', 'contact']);
+    const darkSecs = new Set(['about', 'portfolio', 'contact']);
 
     const cursorMap = {
       hero:       'ci',
       about:      'sq',
-      skills:     'pl',
-      experience: 'xx',
+      services:   'pl',
+      portfolio:  'xx',
+      experience: 'pl',
       contact:    'dm',
     };
 
-    /* Nav indicator: which nav link should be active per section */
+    /* Which nav link lights up for each section */
     const navTarget = {
       hero:       null,
       about:      'about',
-      skills:     'about',        /* skills sits under About nav */
-      experience: 'experience',
+      services:   'about',      /* services scrolls under About nav */
+      portfolio:  'portfolio',
+      experience: 'portfolio',  /* experience scrolls under Work nav */
       contact:    'contact',
     };
 
@@ -1148,7 +1229,6 @@
       const sec = getSec();
       if (sec === lastSec) return;
       lastSec = sec;
-
       document.body.dataset.sec = sec;
       document.body.dataset.cur = cursorMap[sec] || 'ci';
       mainNav.classList.toggle('inv', darkSecs.has(sec));
@@ -1158,14 +1238,14 @@
     window.addEventListener('scroll', applySection, { passive: true });
     setTimeout(applySection, 80);
 
-    /* ── NAV sliding indicator line ── */
+    /* ── NAV INDICATOR LINE ── */
     const navLine  = document.getElementById('nav-line');
     const navLinks = document.getElementById('navLinks');
 
-    function moveNavLine(secTarget) {
-      if (!secTarget) { navLine.style.opacity = '0'; return; }
-      const link = navLinks.querySelector(`a[data-sec="${secTarget}"]`);
-      if (!link)      { navLine.style.opacity = '0'; return; }
+    function moveNavLine(target) {
+      if (!target) { navLine.style.opacity = '0'; return; }
+      const link = navLinks.querySelector(`a[data-sec="${target}"]`);
+      if (!link) { navLine.style.opacity = '0'; return; }
       const cL = navLinks.getBoundingClientRect().left;
       const lR = link.getBoundingClientRect();
       navLine.style.left    = (lR.left - cL) + 'px';
